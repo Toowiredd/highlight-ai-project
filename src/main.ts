@@ -6,12 +6,17 @@ const highlightAI = new HighlightAIRuntime();
 
 // Configure Highlight AI runtime
 highlightAI.configure({
-  apiKey: 'YOUR_HIGHLIGHT_AI_API_KEY',
+  apiKey: process.env.HIGHLIGHT_AI_API_KEY,
   permissions: {
     desktopContext: true,
     osNotifications: true,
   },
 });
+
+if (!process.env.HIGHLIGHT_AI_API_KEY) {
+  console.error('HIGHLIGHT_AI_API_KEY environment variable is not set');
+  process.exit(1);
+}
 
 // Set up OS-level integrations for context monitoring
 setupOSIntegrations(highlightAI);
